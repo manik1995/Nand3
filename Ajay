@@ -1,0 +1,38 @@
+struct
+{
+  volatile unsigned int FLAG1:1;
+  volatile unsigned int FLAG2:1;
+}FLAG_BIT;
+
+int main() {
+  Serial.begin(9600);
+   while(1) //STARTING THE PROCESS
+  { 
+  while(alcohol_value<150)
+      {
+        check_obstacle();
+      }
+ }
+ 
+ void check_obstacle(){
+  		SET(PORTD,PD5); 
+        CLEAR(PORTD,PD4);
+        TCNT0=0x00;
+  		TCCR0A=0x00;
+  		TCCR0B|=((1<<CS02)|(1<<CS00));  
+  		TIMSK0|=((1<<OCIE0A)|(1<<OCIE0B));
+ 		sei();
+        setup();
+        proximity_value = adc1_read();
+        Serial.println(proximity_value);
+        if (proximity_value<255){
+    		speed = proximity_value*0.274;
+   		    Serial.print("Speed: ");
+            Serial.println(speed);  
+            OCR0B = 255-proximity_value;
+  			}
+  		else{
+    		OCR0B = 0;
+    		Serial.println("Speed: 70km/h");
+  			}
+}
