@@ -1,0 +1,29 @@
+#include<avr/io.h>
+#include<avr/interrupt.h>
+#include<stdint.h>
+#include<util/delay.h>
+
+#define SET(PORT,BIT) PORT|= (1<<BIT)
+#define CLEAR(PORT,BIT) PORT&= ~(1<<BIT)
+#define pot 0
+#define pot1 1
+
+void setup_rain(){
+  SET(DDRD,PD7);
+  CLEAR(DDRC,PC2);
+  CLEAR(PORTD,PD7);        
+  CLEAR(PINC,PC2);
+  
+  TCCR2A=0;
+  TCNT2=0x00;
+  TCCR2B|=(1<<CS00);
+  TIMSK2|=(1<<TOIE0);
+  sei();
+}
+
+int main() {
+  Serial.begin(9600);
+  while(1){
+  setup_rain();
+  }
+  }
