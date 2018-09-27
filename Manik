@@ -1,0 +1,33 @@
+#Nand3
+
+void setup_parking(){
+  SET(DDRB,PB5); 
+  setup();
+  reverse_value = adc3_read();
+  if (reverse_value > 512){
+  SET(PORTB,PB5);
+  }
+  else{
+    CLEAR(PORTB,PB5);
+  }
+  }
+  
+  int main() {
+  Serial.begin(9600);
+  
+  while(1)
+      {
+        setup_parking();
+      }
+  }
+      
+  uint16_t adc3_read()
+{
+  ADMUX &= ~(1<<MUX3);
+  ADMUX &= ~(1<<MUX2);
+  ADMUX |=  (1<<MUX1);
+  ADMUX |=  (1<<MUX0);
+  ADCSRA |= 1<<ADSC;
+  while (ADCSRA & (1<<ADSC));
+  return (ADC);
+}    
