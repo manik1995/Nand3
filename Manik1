@@ -1,7 +1,14 @@
 #Nand3
 
+struct
+{
+  volatile unsigned int FLAG1:1;
+  volatile unsigned int FLAG2:1;
+}FLAG_BIT;
+
 void setup_parking(){
   SET(DDRB,PB5); 
+  if (FLAG_BIT.FLAG2==1){
   setup();
   reverse_value = adc3_read();
   if (reverse_value > 512){
@@ -9,6 +16,7 @@ void setup_parking(){
   }
   else{
     CLEAR(PORTB,PB5);
+  }
   }
   }
   
