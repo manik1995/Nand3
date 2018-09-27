@@ -14,7 +14,6 @@ void setup_parking(){
   
   int main() {
   Serial.begin(9600);
-  
   while(1)
       {
         setup_parking();
@@ -25,8 +24,7 @@ void setup_parking(){
 {
   ADMUX &= ~(1<<MUX3);
   ADMUX &= ~(1<<MUX2);
-  ADMUX |=  (1<<MUX1);
-  ADMUX |=  (1<<MUX0);
+  ADMUX |=  ((1<<MUX1) | (1<<MUX0));
   ADCSRA |= 1<<ADSC;
   while (ADCSRA & (1<<ADSC));
   return (ADC);
