@@ -1,0 +1,21 @@
+unsigned long a;
+int b;
+float speed;
+uint16_t alcohol_value=0x0000;//Declaring 16bit variable for ADC
+uint16_t proximity_value=0x0000;
+uint16_t reverse_value=0x0000;
+uint16_t rain_value=0x0000;
+volatile uint16_t counter=0x0000;
+void setup_alcohol(){
+  
+  CLEAR(DDRD,PD2); // pin 2  :Ignition switch
+  SET(DDRD,PD5);   // pin 5  :Input1 for motor
+  SET(DDRD,PD4);   // pin 4  :Input2 for motor
+  CLEAR(DDRC,PC0); // analog 0 :Alcohol sensor input
+}
+int main() {
+  Serial.begin(9600);
+  while(1){
+  alcohol_value = adc0_read();
+  }
+  }
